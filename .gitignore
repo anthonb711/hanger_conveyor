@@ -1,0 +1,36 @@
+# --- STM32CubeIDE / Eclipse metadata ---
+.settings/
+.metadata/
+*.launch
+
+# --- Build output directories ---
+*/Debug/
+*/Release/
+/build/
+/out/
+/bin/
+/obj/
+
+# --- Compiled object files ---
+*.o
+*.a
+*.so
+*.elf
+*.map
+*.lst
+*.ld
+
+# --- Generated sources (can be re-created by CubeMX) ---
+Core/Inc/main.h
+Core/Src/main.c
+*.ioc-backup
+
+# --- Logs and temporary files ---
+*.log
+*.tmp
+*.swp
+*.d
+
+# --- OS-specific ---
+.DS_Store
+Thumbs.db

@@ -30,6 +30,7 @@ Core/Src/main.c
 *.tmp
 *.swp
 *.d
+scratch.txt
 
 # --- OS-specific ---
 .DS_Store

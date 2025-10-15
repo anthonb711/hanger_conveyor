@@ -30,10 +30,12 @@
 #define RS 				(1U<<0)
 #define RW				(1U<<1)
 #define EN				(1U<<2)
+#define LED_BL			(1U<<3)
 
 
 /* 2004 cmd defines */
-#define INIT_VAL		(0x30) // used to initialize the lcd with delays
+#define SET_DDRAM		(0x80) // start of display memory addr
+#define S		(0x38) // used to initialize the lcd with delays
 #define EIGHT_BIT_FUN	(0x38) // this is for 8 bit, 5x8 char, 2 lines
 #define	CURSOR_R		(0x06) //
 #define CLEAR_DSP		(0x01) // homes cursor

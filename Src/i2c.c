@@ -253,7 +253,7 @@ void I2C_byteWrite(uint8_t saddr,  char* data)
 		/*  wait until data register is empty*/
 		while(!(I2C1->SR1 & SR1_TXE)){}
 
-		/* send they byte addr */
+		/* send the byte addr */
 		I2C1->DR = *data;
 
 		/*  should wait for BTF then generate stop*/

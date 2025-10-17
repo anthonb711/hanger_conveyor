@@ -8,18 +8,19 @@
 #ifndef LCD_I2C_H_
 #define LCD_I2C_H_
 
+#include <stdint.h>
 #include "i2c.h"
 
 
-/* This is the structure of the each byte sent
- * to the I2C back pack. LCD must init in 4-bit mode
+/**********************************************
+ Byte Mapping to the I2C back pack.
+ LCD must init in 4-bit mode
   ┌────┬────┬────┬────┬────┬────┬────┬────┐
   │ 7  │ 6  │ 5  │ 4  │ 3  │ 2  │ 1  │ 0  │
   ├────┼────┼────┼────┼────┼────┼────┼────┤
   │ D7 │ D6 │ D5 │ D4 │ Vo │ EN │ RW │ RS │
   └────┴────┴────┴────┴────┴────┴────┴────┘
-*
-*/
+**********************************************/
 
 
 
@@ -28,18 +29,29 @@
 
 /* lcd control pins */
 #define RS 				(1U<<0)
+#define CMD				(0x0)
 #define RW				(1U<<1)
 #define EN				(1U<<2)
-#define LED_BL			(1U<<3)
+#define BKLGHT_ON		(1U<<3)
 
 
 /* 2004 cmd defines */
 #define SET_DDRAM		(0x80) // start of display memory addr
-#define S		(0x38) // used to initialize the lcd with delays
-#define EIGHT_BIT_FUN	(0x38) // this is for 8 bit, 5x8 char, 2 lines
+#define INIT_VAL		(0x30) // used to initialize the lcd
+#define FOUR_BIT        (0x20)
+#define TWO_LINES		(0x80)
+#define FIVE_BY_EIGHT	(0x40)
+#define DSP_CLEAR		(0x01) // homes cursor
+#define DSP_SET			(0x08)
+#define DSP_ON			(0x0C)
+#define CURSOR_MOVE		(0x80)
+#define CURSOR_ON		(0xE)
+#define	CURSOR_BLINK	(0xF) // turns on display and blinks cursor
 #define	CURSOR_R		(0x06) //
-#define CLEAR_DSP		(0x01) // homes cursor
-#define	CURSOR_BLINK	(0x0F) // turns on display and blinks cursor
+
+void lcd_i2c_init		(void						);
+void lcd_eight_bit_write(uint8_t cmd				);
+void lcd_four_bit_write	(uint8_t value, uint8_t mode);
 
 
 

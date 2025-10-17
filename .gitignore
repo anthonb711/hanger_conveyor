@@ -4,8 +4,8 @@
 *.launch
 
 # --- Build output directories ---
-*/Debug/
-*/Release/
+./Debug/
+./Release/
 /build/
 /out/
 /bin/
@@ -19,7 +19,10 @@
 *.map
 *.lst
 *.ld
-
+*.su
+*.cyclo
+*.mk
+*.list
 # --- Generated sources (can be re-created by CubeMX) ---
 Core/Inc/main.h
 Core/Src/main.c

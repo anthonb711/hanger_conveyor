@@ -232,7 +232,7 @@ void I2C_burstRead(uint8_t saddr, uint8_t maddr, int n, char* data)
 	}
 }
 
-void I2C_byteWrite(uint8_t saddr,  char* data)
+void I2C_byteWrite(uint8_t saddr, uint8_t data)
 {
 	volatile int tmp;
 
@@ -254,7 +254,7 @@ void I2C_byteWrite(uint8_t saddr,  char* data)
 		while(!(I2C1->SR1 & SR1_TXE)){}
 
 		/* send the byte addr */
-		I2C1->DR = *data;
+		I2C1->DR = data;
 
 		/*  should wait for BTF then generate stop*/
 		while(!(I2C1->SR1 & SR1_BTF)){}
@@ -298,6 +298,42 @@ void I2C_burstWrite(uint8_t saddr, uint8_t maddr, int n, char* data)
 		/*  should wait for BTF then generate stop*/
 		while(!(I2C1->SR1 & SR1_BTF)){}
 		I2C1->CR1 |= CR1_STOP;
+}
+
+
+/* Probe: returns 1 if ACK received, 0 otherwise */
+int i2c_probe(uint8_t addr)
+{
+    volatile int timeout = 100000;
+    /* wait while busy */
+    while (I2C1->SR2 & SR2_BUSY){}
+
+    /* start */
+    I2C1->CR1 |= CR1_START;
+    while(!(I2C1->SR1 & SR1_SB) && --timeout) {}
+
+    if (!timeout) return 0;
+
+    /* send address (write) */
+    I2C1->DR = (addr << 1);
+
+    /* wait for ADDR or timeout */
+    timeout = 100000;
+    while(!(I2C1->SR1 & SR1_ADDR) && --timeout) {}
+
+    if (!timeout) {
+        /* no ADDR -> assume NACK */
+        I2C1->CR1 |= CR1_STOP;
+        return 0;
+    }
+
+    /* clear ADDR by reading SR2 */
+    volatile uint32_t tmp = I2C1->SR2;
+    (void)tmp;
+
+    /* send stop */
+    I2C1->CR1 |= CR1_STOP;
+    return 1;
 }
 
 

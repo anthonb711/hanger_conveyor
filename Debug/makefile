@@ -59,8 +59,8 @@ all: main-build
 main-build: hanger_conveyor.elf secondary-outputs
 
 # Tool invocations
-hanger_conveyor.elf hanger_conveyor.map: $(OBJS) $(USER_OBJS) /Users/thewiz/embedded/projects/hanger_conveyor/STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "hanger_conveyor.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/thewiz/embedded/projects/hanger_conveyor/STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="hanger_conveyor.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+hanger_conveyor.elf hanger_conveyor.map: $(OBJS) $(USER_OBJS) C:\Users\abrown\source\repos\embedded\hanger_conveyor\STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "hanger_conveyor.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\abrown\source\repos\embedded\hanger_conveyor\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="hanger_conveyor.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -25,7 +25,7 @@ int main(void)
 	lcd_four_bit_write('D', RS);
 	lcd_four_bit_write('E', RS);
 	lcd_four_bit_write('F', RS);
-	set_cursor_position(0x05);
+
 	lcd_four_bit_write('G', RS);
 	lcd_four_bit_write('H', RS);
 	lcd_four_bit_write('I', RS);
@@ -57,10 +57,20 @@ int main(void)
 	lcd_four_bit_write('i', RS);
 
 	// Testing cursor moves and position reads
-	set_cursor_position(0x40);
-	set_cursor_position(0x54);
-	set_cursor_position(0x40);
-	set_cursor_position(0x5D);
+	set_cursor_position(0,0);
+	set_cursor_position(1,0);
+	set_cursor_position(2,0);
+	set_cursor_position(3,0);
+
+	set_cursor_position(0,9);
+	set_cursor_position(1,9);
+	set_cursor_position(2,9);
+	set_cursor_position(3,9);
+
+	set_cursor_position(0,19);
+	set_cursor_position(1,19);
+	set_cursor_position(2,19);
+	set_cursor_position(3,19);
 
 	systickDelayMs(1);
 

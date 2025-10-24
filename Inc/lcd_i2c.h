@@ -53,14 +53,14 @@
 static uint8_t cursor_position;
 
 
-void lcd_i2c_init				(void						);
-void lcd_eight_bit_write		(uint8_t cmd				);
-void lcd_four_bit_write			(uint8_t value, uint8_t mode);
-uint8_t lcd_four_bit_read		(uint8_t mode				);
-uint8_t expander_four_bit_read	(uint8_t mode				);
+void lcd_i2c_init				(void								);
+void lcd_eight_bit_write		(uint8_t cmd						);
+void lcd_four_bit_write			(uint8_t value, uint8_t mode		);
+uint8_t lcd_four_bit_read		(uint8_t mode						);
+uint8_t expander_four_bit_read	(uint8_t mode						);
 
-void set_cursor_position		(uint8_t position			);
-void update_cursor_position		(void						);
+void set_cursor_position		(unsigned int row, unsigned int col	);
+void update_cursor_position		(void								);
 
 
 

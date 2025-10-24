@@ -45,12 +45,9 @@ void lcd_i2c_init(void)
 
 void lcd_eight_bit_write(uint8_t cmd)
 {
-	uint8_t data;
-
 	// HIGH LOW Pulse on E pin
 	I2C_byteWrite(LCD_I2C_ADDR, (cmd | EN));
 	I2C_byteWrite(LCD_I2C_ADDR,  (cmd & ~EN));
-
 }
 
 
@@ -155,10 +152,19 @@ uint8_t lcd_four_bit_read(uint8_t mode)
 
 
 
-void set_cursor_position(uint8_t position)
+void set_cursor_position(unsigned int row, unsigned int col)
 {
-	lcd_four_bit_write((SET_DDRAM | position), CMD);
+	uint8_t row_offsets[4] = { 0x00, 0x40, 0x14, 0x54 };
+
+	if ((row < 0) || (row > 3))
+	{
+		return;
+	}
+	else {
+
+	lcd_four_bit_write((SET_DDRAM | (row_offsets[row] + col)), CMD);
 	update_cursor_position();
+	}
 }
 
 void update_cursor_position(void)

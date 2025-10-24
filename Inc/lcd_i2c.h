@@ -36,7 +36,8 @@
 
 
 /* 2004 cmd defines */
-#define SET_DDRAM		(0x80) // start of display memory addr
+#define SET_DDRAM		(0x80) // base of display memory addr
+#define SET_CGRAM		(0x40)
 #define INIT_VAL		(0x30) // used to initialize the lcd
 #define FOUR_BIT        (0x20)
 #define TWO_LINES		(0x80)
@@ -49,9 +50,17 @@
 #define	CURSOR_BLINK	(0xF) // turns on display and blinks cursor
 #define	CURSOR_R		(0x06) //
 
-void lcd_i2c_init		(void						);
-void lcd_eight_bit_write(uint8_t cmd				);
-void lcd_four_bit_write	(uint8_t value, uint8_t mode);
+static uint8_t cursor_position;
+
+
+void lcd_i2c_init				(void						);
+void lcd_eight_bit_write		(uint8_t cmd				);
+void lcd_four_bit_write			(uint8_t value, uint8_t mode);
+uint8_t lcd_four_bit_read		(uint8_t mode				);
+uint8_t expander_four_bit_read	(uint8_t mode				);
+
+void set_cursor_position		(uint8_t position			);
+void update_cursor_position		(void						);
 
 
 

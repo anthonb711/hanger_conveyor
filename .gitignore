@@ -34,7 +34,9 @@ Core/Src/main.c
 *.swp
 *.d
 scratch.txt
-
+*.gcode
+*.stl
+*.drawio
 # --- OS-specific ---
 .DS_Store
 Thumbs.db

@@ -95,7 +95,37 @@ void I2C1_init(void)
 	I2C1->CR1 |= CR1_PE;
 }
 
-void I2C_byteRead(uint8_t saddr, uint8_t maddr, char* data)
+
+void I2C_four_bit_read(uint8_t saddr, uint8_t *data)
+{
+	volatile int tmp;
+	/*wait while until the bus is not busy */
+	while (I2C1->SR2 & SR2_BUSY){}
+
+	/* generate a start condition and wait for the start bit */
+	I2C1->CR1 |= CR1_START;
+	while(!(I2C1->SR1 & SR1_SB)){}
+	I2C1->DR = (saddr << 1) |1 ;
+
+	/* wait for the addr flags to be set, then clear it */
+	while(!(I2C1->SR1 & SR1_ADDR)){}
+	I2C1->CR1 &= ~CR1_ACK;
+	tmp = I2C1->SR2;
+	I2C1->CR1 |= CR1_STOP;
+
+	/* wait for data register to be set */
+	while(!(I2C1->SR1 & SR1_RXNE)){}
+
+	/* save the byte in master */
+	*data = I2C1->DR;
+
+	/* clear ack */
+	I2C1->CR1 |= CR1_ACK;
+
+}
+
+
+void I2C_byteRead(uint8_t saddr, uint8_t maddr, uint8_t* data)
 {
 	volatile int tmp;
 
@@ -109,7 +139,7 @@ void I2C_byteRead(uint8_t saddr, uint8_t maddr, char* data)
 	/*
 	 * transmit slave address + Write
 	 * the slave address is 7-bits and it with the R/W (1/0) bit is the the first 8 bits of the frame.
-	 * the ACK bit is then sent followed buy the data, another ACK bit and then a stop condition.
+	 * the ACK bit is then sent followed by the data, another ACK bit and then a stop condition.
 	 * so the address needs to be put in the data register along with the actual data to be read/written.
 	 * by left shifting a 7-bit addr we are adding the R/W bit to 0 or write. DR receives 8 bits in total
 	 */
@@ -148,8 +178,8 @@ void I2C_byteRead(uint8_t saddr, uint8_t maddr, char* data)
 	/* wait for data register to be set */
 	while(!(I2C1->SR1 & SR1_RXNE)){}
 
-	/* save the byte in master, then increment the pointer to the next index of the buffer */
-	*data++ = I2C1->DR;
+	/* save the byte in master */
+	*data = I2C1->DR;
 }
 
 void I2C_burstRead(uint8_t saddr, uint8_t maddr, int n, char* data)

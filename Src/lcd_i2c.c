@@ -89,29 +89,29 @@ void lcd_four_bit_write(uint8_t value, uint8_t mode){
 	}
 }
 
-//uint8_t expander_four_bit_read(uint8_t mode){
-//	uint8_t data;
-//	uint8_t data_mask = 0xF0;
-//
-//	/* mode = CMD reads address counter &| busy flag, mode = RS reads data from ACG or ADD */
-//	uint8_t ctrl_rw = (BKLGHT_ON | RW | (mode & RS));
-//	uint8_t ctrl_no_rw = (BKLGHT_ON | (mode & RS));
-//	/*  */
-//	uint8_t dummy_bits = 0xF0;
-//	I2C_byteWrite(LCD_I2C_ADDR, (dummy_bits | ctrl_rw | EN));
-//	systickDelayMs(1);
-//
-//	I2C_four_bit_read(LCD_I2C_ADDR, &data);
-//	systickDelayMs(1);
-//
-//	I2C_byteWrite(LCD_I2C_ADDR, ((dummy_bits | ctrl_rw ) & ~EN));
-//	systickDelayMs(1);
-//
-////	 I2C_byteWrite(LCD_I2C_ADDR, ((0x00) | BKLGHT_ON));
-////	 systickDelayMs(1);
-//	return data & data_mask;
-//
-//}
+
+
+
+void lcd_burst_write(uint8_t *value, size_t n)
+{
+
+	// declare ctrl = backlight & RS bit
+	// create a buffer for the burst write - it takes 4 expander writes to send one char to the LCD
+		// 20 char postions available per write 20 *4 = 80 bytes
+	// declare buffer index
+	// start the loop with size
+		// each iteration takes char off *value adds it to the buffer
+		// first wite is High nib with the ctrl and EN high
+		// second wite is High nib with the ctrl and low
+		// third wite is Low nib with the ctrl and EN high
+		// second wite is low nib with the ctrl and low
+	// send the buffer and the buffer index(size) to I2C busrt wirte
+
+
+	//** need to think about position update. Do we want to read inbetweenn each loop iternation
+	// ** or do we wnat to update postiion at the end.
+}
+
 
 uint8_t lcd_four_bit_read(uint8_t mode)
 {
